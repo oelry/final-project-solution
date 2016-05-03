@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html ng-app = "myPhoneBookApp">
+<head>
+	<title>Telephone Book</title>
+	<script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="phonebook.style.css">
+	<script type="text/javascript" src = "app.js"></script>
+	<script type="text/javascript" src = "controller.js"></script>
+	<script type="text/javascript" src = "service.js"></script>
+</head>
+<body ng-controller = "myPhoneBookCtrl" ng-init = "alpha = 'a-z'; view = 'contacts'; toggle.viewContacts = true; toggle.viewAddUser = false; filters.field = 'name';">
+	<div class = "container">
+		<h1>My Phone Book</h1>
+<!-- Controls -->
+		<div class = "controls">
+			<button id = "viewAddUser" ng-class = "{'btn btn-default': toggle.viewContacts, 'btn btn-primary' : toggle.viewAddUser}" ng-click = "view = 'addUser'; toggle.viewAddUser = true; toggle.viewContacts = false;">
+				<span class = "glyphicon glyphicon-user"></span> 
+				Add Contact
+			</button>
+			<button id = "viewContacts" ng-class = "{'btn btn-default': toggle.viewAddUser, 'btn btn-primary' : toggle.viewContacts}" ng-click = "view = 'contacts'; toggle.viewContacts = true; toggle.viewAddUser = false;">
+				<span class = "glyphicon glyphicon-search"></span> 
+				View Contacts
+			</button>
+		</div>
+		<br/><hr/><br/>
+<!-- Contact List -->
+		<div class = "container" ng-if = "view == 'contacts'">
+			<button class = "btn btn-default" ng-click = "filters.reverseOrder = !filters.reverseOrder; orderByBtn()">{{alpha}}</button>
+			<br/><br/>
+			<!-- Search Bar -->
+			<span class = "glyphicon glyphicon-search"></span> 
+			<input type = "text" ng-model = "filters.contact" class = "searchBar"/><br/><br/>
+			<!-- Contact List -->
+			<div ng-repeat = "contact in contacts | filter: filters.contact | orderBy: filters.field:filters.reverseOrder">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						{{contact.name}}
+					</div>
+					<div class="panel-body">
+						Phone:  {{contact.phone}}<br/><br/>
+						City: {{contact.city}}<br/><br/>
+						State: {{contact.state}}
+					</div>
+				</div>				
+			</div>
+		</div>
+<!-- Add User -->
+		<div class = "container" ng-if = "view == 'addUser'">
+
+		</div>
+	</div>
+</body>
+</html>
